@@ -36,11 +36,57 @@ const Gallery = ({ users }: GalleryProps) => {
     setIsModalOpen(false);
   };
 
+  const getComparedName = (a: User, b: User, name: keyof User) => {
+    switch (name) {
+      case "name":
+        return {compArgA: a.name, compArgB: b.name};
+
+      case "company":
+        return { compArgA: a.company.name, compArgB: b.company.name};
+
+      case "email":
+        return { compArgA: a.email, compArgB: b.email };
+
+      default:
+        return {compArgA: a, compArgB: b};
+    }
+  }
+
+  const handleSort = (name: keyof User, type: string) => {
+    switch (type) {
+      case 'ascending':
+        setUsersList((prev) => [...prev].sort((a: User, b: User) => {
+          const { compArgA, compArgB } = getComparedName(a, b, name);
+          if (compArgA < compArgB) {
+            return -1;
+          } else if (compArgA > compArgB) {
+            return 1;
+          }
+          return 0;
+        }));
+        break;
+
+      case 'descending':
+        setUsersList((prev) => [...prev].sort((a: User, b: User) => {
+          const { compArgA, compArgB } = getComparedName(a, b, name);
+          if (compArgA > compArgB) {
+            return -1;
+          } else if (compArgA < compArgB) {
+            return 1;
+          }
+          return 0;
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="user-gallery">
       <div className="heading">
         <h1 className="title">Users</h1>
-        <Controls />
+        <Controls handleSort={handleSort} />
       </div>
       <div className="items">
         {usersList.map((user, index) => (

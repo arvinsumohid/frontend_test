@@ -10,9 +10,13 @@
     @media screen and (max-width: 480px) {
       grid-template-columns: 1fr;
     }
+
+    @media (min-width: 701px) and (max-width: 1180px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   }
 
   > .heading + .items {
     margin-top: 32px;
-  }
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import { User } from "./types/user";
 
